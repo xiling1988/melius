@@ -10,11 +10,12 @@ module.exports = {
       backgroundImage: {},
       colors: {
         nexusBlue: '#0b4498',
-        nexusRed: '#a91cda'
-      }
+        nexusRed: '#a91cda',
+      },
     },
   },
   plugins: [
     require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/forms'),
   ],
 }
