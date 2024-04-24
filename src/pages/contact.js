@@ -4,7 +4,7 @@ import {
   PhoneIcon,
 } from '@heroicons/react/24/outline'
 
-export default function index() {
+const contact = () => {
   return (
     <div className='relative isolate bg-gray-900'>
       <div className='mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2'>
@@ -218,3 +218,5 @@ export default function index() {
     </div>
   )
 }
+
+export default contact
