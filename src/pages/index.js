@@ -9,7 +9,7 @@ import CTAtoContact from '@/components/Index/CTAtoContact'
 
 export default function Home() {
   return (
-    <main>
+    <main className='absolute top-0 left-0 right-0'>
       <Layout>
         <Hero />
         <Vision />
