@@ -19,7 +19,7 @@ export default function Navbar() {
       {/* <header className='fixed bg-white opacity-80 shadow-lg rounded-xl inset-x-0 top-3 left-2 right-2 z-50'> */}
 
         <nav
-          className='mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8 bg-white opacity-80 shadow-lg rounded-xl inset-x-0 mt-3 left-2 right-2 z-50'
+          className='mx-auto flex max-w-7xl items-center justify-between p-3 lg:px-8 bg-white opacity-90 shadow-2xl border rounded-xl inset-x-0 mt-9 left-2 right-2 z-50'
           aria-label='Global'
         >
           <div className='flex lg:flex-1'>
@@ -44,7 +44,7 @@ export default function Navbar() {
               <Bars3Icon className='h-6 w-6' aria-hidden='true' />
             </button>
           </div>
-          <div className='hidden lg:flex lg:gap-x-12'>
+          <div className='hidden lg:flex lg:gap-x-20'>
             {navigation.map((item) => (
               <a
                 key={item.name}
