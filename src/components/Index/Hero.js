@@ -1,6 +1,8 @@
 import React from 'react'
+import { useModal } from '@/contexts/ModalContext'
 
 const Hero = () => {
+  const {isOpen, toggleModal} = useModal()
   return (
     <div className='relative isolate overflow-hidden bg-gradient-to-b from-indigo-100/20 pt-14'>
       <div
@@ -24,12 +26,13 @@ const Hero = () => {
               Qui irure qui lorem cupidatat commodo.
             </p>
             <div className='mt-10 flex items-center gap-x-6'>
-              <a
-                href='#'
+              <button
+              onClick={toggleModal}
+                
                 className='rounded-md bg-nexusBlue hover:bg-nexusRed px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
               >
                 Get started
-              </a>
+              </button>
               <a
                 href='#'
                 className='text-sm font-semibold leading-6 text-nexusRed hover:text-nexusBlue'
