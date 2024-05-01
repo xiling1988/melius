@@ -11,6 +11,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import Layout from '@/components/Layout/Layout'
+import SubjectsHeader from '@/components/services/SubjectsHeader'
 
 const currencies = ['CAD', 'USD', 'AUD', 'EUR', 'GBP']
 const navigation = {
@@ -96,21 +97,21 @@ const navigation = {
 }
 const collections = [
   {
-    name: "Women's",
+    name: 'Free',
     href: '#',
     imageSrc:
       'https://tailwindui.com/img/ecommerce-images/home-page-04-collection-01.jpg',
     imageAlt: 'Woman wearing a comfortable cotton t-shirt.',
   },
   {
-    name: "Men's",
+    name: 'Career Coaching',
     href: '#',
     imageSrc:
       'https://tailwindui.com/img/ecommerce-images/home-page-04-collection-02.jpg',
     imageAlt: 'Man wearing a comfortable and casual cotton t-shirt.',
   },
   {
-    name: 'Desk Accessories',
+    name: 'Forever',
     href: '#',
     imageSrc:
       'https://tailwindui.com/img/ecommerce-images/home-page-04-collection-03.jpg',
@@ -193,8 +194,6 @@ function classNames(...classes) {
 }
 
 const index = () => {
-  const [open, setOpen] = useState(false)
-
   return (
     <Layout>
       <main className=''>
@@ -208,9 +207,9 @@ const index = () => {
             <div className='relative w-full flex-1 bg-gray-800'>
               <div className='absolute inset-0 overflow-hidden'>
                 <img
-                  src='https://tailwindui.com/img/ecommerce-images/home-page-04-hero-full-width.jpg'
+                  src='/rockstar-emp.jpeg'
                   alt=''
-                  className='h-full w-full object-cover object-center'
+                  className='h-full w-full object-cover object-top'
                 />
               </div>
               <div className='absolute inset-0 bg-gray-900 opacity-50' />
@@ -227,7 +226,7 @@ const index = () => {
               <div className='relative w-full flex-1 bg-gray-800'>
                 <div className='absolute inset-0 overflow-hidden'>
                   <img
-                    src='https://tailwindui.com/img/ecommerce-images/home-page-04-hero-full-width.jpg'
+                    src='/rockstar-emp.jpeg'
                     alt=''
                     className='h-full w-full object-cover object-center'
                   />
@@ -237,15 +236,15 @@ const index = () => {
               <div className='h-48 w-full bg-white' />
             </div>
             <div className='relative py-32'>
-              <h1 className='text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl'>
-                Mid-Season Sale
+              <h1 className='text-4xl font-bold tracking-tight text-white mt-20 md:mt-40 sm:text-5xl md:text-6xl'>
+                Become a Melius Rockstar!
               </h1>
               <div className='mt-4 sm:mt-6'>
                 <a
                   href='#'
-                  className='inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 font-medium text-white hover:bg-indigo-700'
+                  className='inline-block rounded-md border border-transparent bg-nexusRed px-8 py-3 font-medium text-white hover:bg-nexusBlue'
                 >
-                  Shop Collection
+                  Your first session here
                 </a>
               </div>
             </div>
@@ -270,6 +269,9 @@ const index = () => {
                       className='absolute inset-0 overflow-hidden rounded-lg'
                     >
                       <div className='absolute inset-0 overflow-hidden group-hover:opacity-75'>
+                        <h2 className='text-sky-400 bg-nexusBlue text-3xl font-bold text-center py-16 h-48 z-20'>
+                          {collection.name}
+                        </h2>
                         <img
                           src={collection.imageSrc}
                           alt={collection.imageAlt}
@@ -297,10 +299,10 @@ const index = () => {
             </div>
           </section>
         </div>
-
         <section aria-labelledby='trending-heading'>
           <div className='mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:pt-32'>
-            <div className='md:flex md:items-center md:justify-between'>
+        <SubjectsHeader />
+            {/* <div className='md:flex md:items-center md:justify-between'>
               <h2
                 id='favorites-heading'
                 className='text-2xl font-bold tracking-tight text-gray-900'
@@ -314,7 +316,7 @@ const index = () => {
                 Shop the collection
                 <span aria-hidden='true'> &rarr;</span>
               </a>
-            </div>
+            </div> */}
 
             <div className='mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-0 lg:gap-x-8'>
               {trendingProducts.map((product) => (

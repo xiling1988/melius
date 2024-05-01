@@ -3,6 +3,7 @@ import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import Headroom from 'react-headroom'
+import Link from 'next/link'
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -46,7 +47,7 @@ export default function Navbar() {
         </div>
         <div className='hidden lg:flex lg:gap-x-20'>
           {navigation.map((item) => (
-            <a
+            <Link
               key={item.name}
               href={item.href}
               className={`text-sm font-semibold leading-6 text-${
@@ -54,7 +55,7 @@ export default function Navbar() {
               }`}
             >
               {item.name}
-            </a>
+            </Link>
           ))}
         </div>
       </nav>
