@@ -1,303 +1,394 @@
-import { useState } from 'react'
-import { Dialog } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Fragment, useState } from 'react'
+import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import {
-  AcademicCapIcon,
-  CheckCircleIcon,
-  HandRaisedIcon,
-  RocketLaunchIcon,
-  SparklesIcon,
-  SunIcon,
-  UserGroupIcon,
-} from '@heroicons/react/20/solid'
-import Header from '@/components/About/Header'
+  Bars3Icon,
+  MagnifyingGlassIcon,
+  QuestionMarkCircleIcon,
+  ShoppingBagIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/outline'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import Layout from '@/components/Layout/Layout'
+import SubjectsHeader from '@/components/services/SubjectsHeader'
 
-const stats = [
-  { label: 'Business was founded', value: '2012' },
-  { label: 'People on the team', value: '120+' },
-  { label: 'Users on the platform', value: '250k' },
-  { label: 'Paid out to creators', value: '$70M' },
+const currencies = ['CAD', 'USD', 'AUD', 'EUR', 'GBP']
+const navigation = {
+  categories: [
+    {
+      name: 'Women',
+      featured: [
+        {
+          name: 'New Arrivals',
+          href: '#',
+          imageSrc:
+            'https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg',
+          imageAlt:
+            'Models sitting back to back, wearing Basic Tee in black and bone.',
+        },
+        {
+          name: 'Basic Tees',
+          href: '#',
+          imageSrc:
+            'https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg',
+          imageAlt:
+            'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
+        },
+        {
+          name: 'Accessories',
+          href: '#',
+          imageSrc:
+            'https://tailwindui.com/img/ecommerce-images/mega-menu-category-03.jpg',
+          imageAlt:
+            'Model wearing minimalist watch with black wristband and white watch face.',
+        },
+        {
+          name: 'Carry',
+          href: '#',
+          imageSrc:
+            'https://tailwindui.com/img/ecommerce-images/mega-menu-category-04.jpg',
+          imageAlt:
+            'Model opening tan leather long wallet with credit card pockets and cash pouch.',
+        },
+      ],
+    },
+    {
+      name: 'Men',
+      featured: [
+        {
+          name: 'New Arrivals',
+          href: '#',
+          imageSrc:
+            'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg',
+          imageAlt:
+            'Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.',
+        },
+        {
+          name: 'Basic Tees',
+          href: '#',
+          imageSrc:
+            'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-02.jpg',
+          imageAlt: 'Model wearing light heather gray t-shirt.',
+        },
+        {
+          name: 'Accessories',
+          href: '#',
+          imageSrc:
+            'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-03.jpg',
+          imageAlt:
+            'Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body.',
+        },
+        {
+          name: 'Carry',
+          href: '#',
+          imageSrc:
+            'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-04.jpg',
+          imageAlt:
+            'Model putting folded cash into slim card holder olive leather wallet with hand stitching.',
+        },
+      ],
+    },
+  ],
+  pages: [
+    { name: 'Company', href: '#' },
+    { name: 'Stores', href: '#' },
+  ],
+}
+const collections = [
+  {
+    name: 'Free',
+    href: '#',
+    imageSrc:
+      'https://tailwindui.com/img/ecommerce-images/home-page-04-collection-01.jpg',
+    imageAlt: 'Woman wearing a comfortable cotton t-shirt.',
+  },
+  {
+    name: 'Career Coaching',
+    href: '#',
+    imageSrc:
+      'https://tailwindui.com/img/ecommerce-images/home-page-04-collection-02.jpg',
+    imageAlt: 'Man wearing a comfortable and casual cotton t-shirt.',
+  },
+  {
+    name: 'Forever',
+    href: '#',
+    imageSrc:
+      'https://tailwindui.com/img/ecommerce-images/home-page-04-collection-03.jpg',
+    imageAlt:
+      'Person sitting at a wooden desk with paper note organizer, pencil and tablet.',
+  },
 ]
-const values = [
+const trendingProducts = [
   {
-    name: 'Be world-class.',
-    description:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit aute id magna.',
-    icon: RocketLaunchIcon,
+    id: 1,
+    name: 'Leather Long Wallet',
+    color: 'Natural',
+    price: '$75',
+    href: '#',
+    imageSrc:
+      'https://tailwindui.com/img/ecommerce-images/home-page-04-trending-product-02.jpg',
+    imageAlt: 'Hand stitched, orange leather long wallet.',
   },
-  {
-    name: 'Take responsibility.',
-    description:
-      'Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo.',
-    icon: HandRaisedIcon,
-  },
-  {
-    name: 'Be supportive.',
-    description:
-      'Ac tincidunt sapien vehicula erat auctor pellentesque rhoncus voluptas blanditiis et.',
-    icon: UserGroupIcon,
-  },
-  {
-    name: 'Always learning.',
-    description:
-      'Iure sed ab. Aperiam optio placeat dolor facere. Officiis pariatur eveniet atque et dolor.',
-    icon: AcademicCapIcon,
-  },
-  {
-    name: 'Share everything you know.',
-    description:
-      'Laudantium tempora sint ut consectetur ratione. Ut illum ut rem numquam fuga delectus.',
-    icon: SparklesIcon,
-  },
-  {
-    name: 'Enjoy downtime.',
-    description:
-      'Culpa dolorem voluptatem velit autem rerum qui et corrupti. Quibusdam quo placeat.',
-    icon: SunIcon,
-  },
+  // More products...
 ]
-const team = [
+const perks = [
   {
-    name: 'Leslie Alexander',
-    role: 'Co-Founder / CEO',
+    name: 'Free returns',
     imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-    location: 'Toronto, Canada',
+      'https://tailwindui.com/img/ecommerce/icons/icon-returns-light.svg',
+    description:
+      'Not what you expected? Place it back in the parcel and attach the pre-paid postage stamp.',
   },
-  // More people...
+  {
+    name: 'Same day delivery',
+    imageUrl:
+      'https://tailwindui.com/img/ecommerce/icons/icon-calendar-light.svg',
+    description:
+      'We offer a delivery service that has never been done before. Checkout today and receive your products within hours.',
+  },
+  {
+    name: 'All year discount',
+    imageUrl:
+      'https://tailwindui.com/img/ecommerce/icons/icon-gift-card-light.svg',
+    description:
+      'Looking for a deal? You can use the code "ALLYEAR" at checkout and get money off all year round.',
+  },
+  {
+    name: 'For the planet',
+    imageUrl:
+      'https://tailwindui.com/img/ecommerce/icons/icon-planet-light.svg',
+    description:
+      'We’ve pledged 1% of sales to the preservation and restoration of the natural environment.',
+  },
 ]
-const benefits = [
-  'Competitive salaries',
-  'Flexible work hours',
-  '30 days of paid vacation',
-  'Annual team retreats',
-  'Benefits for you and your family',
-  'A great work environment',
-]
+const footerNavigation = {
+  products: [
+    { name: 'Bags', href: '#' },
+    { name: 'Tees', href: '#' },
+    { name: 'Objects', href: '#' },
+    { name: 'Home Goods', href: '#' },
+    { name: 'Accessories', href: '#' },
+  ],
+  company: [
+    { name: 'Who we are', href: '#' },
+    { name: 'Sustainability', href: '#' },
+    { name: 'Press', href: '#' },
+    { name: 'Careers', href: '#' },
+    { name: 'Terms & Conditions', href: '#' },
+    { name: 'Privacy', href: '#' },
+  ],
+  customerService: [
+    { name: 'Contact', href: '#' },
+    { name: 'Shipping', href: '#' },
+    { name: 'Returns', href: '#' },
+    { name: 'Warranty', href: '#' },
+    { name: 'Secure Payments', href: '#' },
+    { name: 'FAQ', href: '#' },
+    { name: 'Find a store', href: '#' },
+  ],
+}
 
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
 const index = () => {
   return (
     <Layout>
-      <div className='bg-nexusBlue'>
-        <main className='relative isolate'>
-          <>
-            {/* Background */}
-            <div
-              className='absolute inset-x-0 top-4 -z-10 flex transform-gpu justify-center overflow-hidden blur-3xl'
-              aria-hidden='true'
-            >
-              <div
-                className='aspect-[1108/632] w-[69.25rem] flex-none bg-gradient-to-r from-nexusRed to-nexusRed opacity-75'
-                style={{
-                  clipPath:
-                    'polygon(73.6% 51.7%, 91.7% 11.8%, 100% 46.4%, 97.4% 82.2%, 92.5% 84.9%, 75.7% 64%, 55.3% 47.5%, 46.5% 49.4%, 45% 62.9%, 50.3% 87.2%, 21.3% 64.1%, 0.1% 100%, 5.4% 51.1%, 21.4% 63.9%, 58.9% 0.2%, 73.6% 51.7%)',
-                }}
-              />
-            </div>
-
-            {/* Header section */}
-            <div className='px-6 pt-14 lg:px-8'>
-              <div className='mx-auto max-w-2xl pt-24 text-center sm:pt-40'>
-                <h2 className='text-4xl font-bold tracking-tight text-white sm:text-6xl'>
-                  Rockstars by Melius
-                </h2>
-                <p className='mt-6 text-lg leading-8 text-gray-300'>
-                  Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure
-                  qui lorem cupidatat commodo. Elit sunt amet fugiat veniam
-                  occaecat fugiat aliqua.
-                </p>
-              </div>
-            </div>
-          </>
-
-          {/* Content section */}
-          <div className='mx-auto mt-20 max-w-7xl px-6 lg:px-8'>
-            <div className='mx-auto max-w-2xl lg:mx-0 lg:max-w-none'>
-              <div className='grid max-w-xl grid-cols-1 gap-8 text-base leading-7 text-gray-300 lg:max-w-none lg:grid-cols-2'>
-                <div>
-                  <p>
-                    Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget
-                    risus enim. Mattis mauris semper sed amet vitae sed turpis
-                    id. Id dolor praesent donec est. Odio penatibus risus
-                    viverra tellus varius sit neque erat velit. Faucibus commodo
-                    massa rhoncus, volutpat. Dignissim sed eget risus enim.
-                    Mattis mauris semper sed amet vitae sed turpis id.
-                  </p>
-                  <p className='mt-8'>
-                    Et vitae blandit facilisi magna lacus commodo. Vitae sapien
-                    duis odio id et. Id blandit molestie auctor fermentum
-                    dignissim. Lacus diam tincidunt ac cursus in vel. Mauris
-                    varius vulputate et ultrices hac adipiscing egestas.
-                  </p>
-                </div>
-                <div>
-                  <p>
-                    Erat pellentesque dictumst ligula porttitor risus eget et
-                    eget. Ultricies tellus felis id dignissim eget. Est augue
-                    maecenas risus nulla ultrices congue nunc tortor. Enim et
-                    nesciunt doloremque nesciunt voluptate.
-                  </p>
-                  <p className='mt-8'>
-                    Et vitae blandit facilisi magna lacus commodo. Vitae sapien
-                    duis odio id et. Id blandit molestie auctor fermentum
-                    dignissim. Lacus diam tincidunt ac cursus in vel. Mauris
-                    varius vulputate et ultrices hac adipiscing egestas. Iaculis
-                    convallis ac tempor et ut. Ac lorem vel integer orci.
-                  </p>
-                </div>
-              </div>
-              <dl className='mt-16 grid grid-cols-1 gap-x-8 gap-y-12 sm:mt-20 sm:grid-cols-2 sm:gap-y-16 lg:mt-28 lg:grid-cols-4'>
-                {stats.map((stat, statIdx) => (
-                  <div
-                    key={statIdx}
-                    className='flex flex-col-reverse gap-y-3 border-l border-white/20 pl-6'
-                  >
-                    <dt className='text-base leading-7 text-gray-300'>
-                      {stat.label}
-                    </dt>
-                    <dd className='text-3xl font-semibold tracking-tight text-white'>
-                      {stat.value}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-          </div>
-
-          {/* Image section */}
-          <div className='mt-32 sm:mt-40 xl:mx-auto xl:max-w-7xl xl:px-8'>
-            <img
-              src='https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2894&q=80'
-              alt=''
-              className='aspect-[9/4] w-full object-cover xl:rounded-3xl'
-            />
-          </div>
-
-          {/* Values section */}
-          <div className='mx-auto mt-32 max-w-7xl px-6 sm:mt-40 lg:px-8'>
-            <div className='mx-auto max-w-2xl lg:mx-0'>
-              <h2 className='text-3xl font-bold tracking-tight text-white sm:text-4xl'>
-                Our values
-              </h2>
-              <p className='mt-6 text-lg leading-8 text-gray-300'>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Maiores impedit perferendis suscipit eaque, iste dolor
-                cupiditate blanditiis.
-              </p>
-            </div>
-            <dl className='mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 text-base leading-7 text-gray-300 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:gap-x-16'>
-              {values.map((value) => (
-                <div key={value.name} className='relative pl-9'>
-                  <dt className='inline font-semibold text-white'>
-                    <value.icon
-                      className='absolute left-1 top-1 h-5 w-5 text-indigo-500'
-                      aria-hidden='true'
-                    />
-                    {value.name}
-                  </dt>{' '}
-                  <dd className='inline'>{value.description}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-
-          {/* Team section */}
-          <div className='mx-auto mt-32 max-w-7xl px-6 sm:mt-40 lg:px-8'>
-            <div className='mx-auto max-w-2xl lg:mx-0'>
-              <h2 className='text-3xl font-bold tracking-tight text-white sm:text-4xl'>
-                Our team
-              </h2>
-              <p className='mt-6 text-lg leading-8 text-gray-300'>
-                Excepturi repudiandae alias ut. Totam aut facilis. Praesentium
-                in neque vel omnis. Eos error odio. Qui fugit voluptatibus eum
-                culpa.
-              </p>
-            </div>
-            <ul
-              role='list'
-              className='mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 xl:grid-cols-4'
-            >
-              {team.map((person) => (
-                <li key={person.name}>
-                  <img
-                    className='aspect-[14/13] w-full rounded-2xl object-cover'
-                    src={person.imageUrl}
-                    alt=''
-                  />
-                  <h3 className='mt-6 text-lg font-semibold leading-8 tracking-tight text-white'>
-                    {person.name}
-                  </h3>
-                  <p className='text-base leading-7 text-gray-300'>
-                    {person.role}
-                  </p>
-                  <p className='text-sm leading-6 text-gray-500'>
-                    {person.location}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* CTA section */}
-          <div className='relative isolate -z-10 mt-32 sm:mt-40'>
-            <div className='mx-auto max-w-7xl sm:px-6 lg:px-8'>
-              <div className='mx-auto flex max-w-2xl flex-col gap-16 bg-white/5 px-6 py-16 ring-1 ring-white/10 sm:rounded-3xl sm:p-8 lg:mx-0 lg:max-w-none lg:flex-row lg:items-center lg:py-20 xl:gap-x-20 xl:px-20'>
+      <main className=''>
+        {/* Hero section */}
+        <div className='relative'>
+          {/* Background image and overlap */}
+          <div
+            aria-hidden='true'
+            className='absolute inset-0 hidden sm:flex sm:flex-col'
+          >
+            <div className='relative w-full flex-1 bg-gray-800'>
+              <div className='absolute inset-0 overflow-hidden'>
                 <img
-                  className='h-96 w-full flex-none rounded-2xl object-cover shadow-xl lg:aspect-square lg:h-auto lg:max-w-sm'
-                  src='https://images.unsplash.com/photo-1519338381761-c7523edc1f46?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80'
+                  src='/rockstar-emp.jpeg'
                   alt=''
+                  className='h-full w-full object-cover object-top'
                 />
-                <div className='w-full flex-auto'>
-                  <h2 className='text-3xl font-bold tracking-tight text-white sm:text-4xl'>
-                    Join our team
-                  </h2>
-                  <p className='mt-6 text-lg leading-8 text-gray-300'>
-                    Lorem ipsum dolor sit amet consect adipisicing elit.
-                    Possimus magnam voluptatum cupiditate veritatis in accusamus
-                    quisquam.
-                  </p>
-                  <ul
-                    role='list'
-                    className='mt-10 grid grid-cols-1 gap-x-8 gap-y-3 text-base leading-7 text-white sm:grid-cols-2'
-                  >
-                    {benefits.map((benefit) => (
-                      <li key={benefit} className='flex gap-x-3'>
-                        <CheckCircleIcon
-                          className='h-7 w-5 flex-none'
-                          aria-hidden='true'
-                        />
-                        {benefit}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className='mt-10 flex'>
-                    <a
-                      href='#'
-                      className='text-sm font-semibold leading-6 text-indigo-400'
-                    >
-                      See our job postings{' '}
-                      <span aria-hidden='true'>&rarr;</span>
-                    </a>
-                  </div>
+              </div>
+              <div className='absolute inset-0 bg-gray-900 opacity-50' />
+            </div>
+            <div className='h-32 w-full bg-white md:h-40 lg:h-48' />
+          </div>
+
+          <div className='relative mx-auto max-w-3xl px-4 pb-96 text-center sm:px-6 sm:pb-0 lg:px-8'>
+            {/* Background image and overlap */}
+            <div
+              aria-hidden='true'
+              className='absolute inset-0 flex flex-col sm:hidden'
+            >
+              <div className='relative w-full flex-1 bg-gray-800'>
+                <div className='absolute inset-0 overflow-hidden'>
+                  <img
+                    src='/rockstar-emp.jpeg'
+                    alt=''
+                    className='h-full w-full object-cover object-center'
+                  />
                 </div>
+                <div className='absolute inset-0 bg-gray-900 opacity-50' />
+              </div>
+              <div className='h-48 w-full bg-white' />
+            </div>
+            <div className='relative py-32'>
+              <h1 className='text-4xl font-bold tracking-tight text-white mt-20 md:mt-40 sm:text-5xl md:text-6xl'>
+                Become a Melius Rockstar!
+              </h1>
+              <div className='mt-4 sm:mt-6'>
+                <a
+                  href='#'
+                  className='inline-block rounded-md border border-transparent bg-nexusRed px-8 py-3 font-medium text-white hover:bg-nexusBlue'
+                >
+                  Your first session here
+                </a>
               </div>
             </div>
-            <div
-              className='absolute inset-x-0 -top-16 -z-10 flex transform-gpu justify-center overflow-hidden blur-3xl'
-              aria-hidden='true'
-            >
-              <div
-                className='aspect-[1318/752] w-[82.375rem] flex-none bg-gradient-to-r from-nexusRed to-nexusRed opacity-75'
-                style={{
-                  clipPath:
-                    'polygon(73.6% 51.7%, 91.7% 11.8%, 100% 46.4%, 97.4% 82.2%, 92.5% 84.9%, 75.7% 64%, 55.3% 47.5%, 46.5% 49.4%, 45% 62.9%, 50.3% 87.2%, 21.3% 64.1%, 0.1% 100%, 5.4% 51.1%, 21.4% 63.9%, 58.9% 0.2%, 73.6% 51.7%)',
-                }}
-              />
+          </div>
+
+          <section
+            aria-labelledby='collection-heading'
+            className='relative -mt-96 sm:mt-0'
+          >
+            <h2 id='collection-heading' className='sr-only'>
+              Collections
+            </h2>
+            <div className='mx-auto grid max-w-md grid-cols-1 gap-y-6 px-4 sm:max-w-7xl sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0 sm:px-6 lg:gap-x-8 lg:px-8'>
+              {collections.map((collection) => (
+                <div
+                  key={collection.name}
+                  className='group relative h-96 rounded-lg bg-white shadow-xl sm:aspect-h-5 sm:aspect-w-4 sm:h-auto'
+                >
+                  <div>
+                    <div
+                      aria-hidden='true'
+                      className='absolute inset-0 overflow-hidden rounded-lg'
+                    >
+                      <div className='absolute inset-0 overflow-hidden group-hover:opacity-75'>
+                        <h2 className='text-sky-400 bg-nexusBlue text-3xl font-bold text-center py-16 h-48 z-20'>
+                          {collection.name}
+                        </h2>
+                        <img
+                          src={collection.imageSrc}
+                          alt={collection.imageAlt}
+                          className='h-full w-full object-cover object-center'
+                        />
+                      </div>
+                      <div className='absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-50' />
+                    </div>
+                    <div className='absolute inset-0 flex items-end rounded-lg p-6'>
+                      <div>
+                        <p aria-hidden='true' className='text-sm text-white'>
+                          Shop the collection
+                        </p>
+                        <h3 className='mt-1 font-semibold text-white'>
+                          <a href={collection.href}>
+                            <span className='absolute inset-0' />
+                            {collection.name}
+                          </a>
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+        <section aria-labelledby='trending-heading'>
+          <div className='mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:pt-32'>
+        <SubjectsHeader />
+            {/* <div className='md:flex md:items-center md:justify-between'>
+              <h2
+                id='favorites-heading'
+                className='text-2xl font-bold tracking-tight text-gray-900'
+              >
+                Trending Products
+              </h2>
+              <a
+                href='#'
+                className='hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 md:block'
+              >
+                Shop the collection
+                <span aria-hidden='true'> &rarr;</span>
+              </a>
+            </div> */}
+
+            <div className='mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-0 lg:gap-x-8'>
+              {trendingProducts.map((product) => (
+                <div key={product.id} className='group relative'>
+                  <div className='h-56 w-full overflow-hidden rounded-md group-hover:opacity-75 lg:h-72 xl:h-80'>
+                    <img
+                      src={product.imageSrc}
+                      alt={product.imageAlt}
+                      className='h-full w-full object-cover object-center'
+                    />
+                  </div>
+                  <h3 className='mt-4 text-sm text-gray-700'>
+                    <a href={product.href}>
+                      <span className='absolute inset-0' />
+                      {product.name}
+                    </a>
+                  </h3>
+                  <p className='mt-1 text-sm text-gray-500'>{product.color}</p>
+                  <p className='mt-1 text-sm font-medium text-gray-900'>
+                    {product.price}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className='mt-8 text-sm md:hidden'>
+              <a
+                href='#'
+                className='font-medium text-indigo-600 hover:text-indigo-500'
+              >
+                Shop the collection
+                <span aria-hidden='true'> &rarr;</span>
+              </a>
             </div>
           </div>
-        </main>
-      </div>
+        </section>
+
+        <section
+          aria-labelledby='perks-heading'
+          className='border-t border-gray-200 bg-gray-50'
+        >
+          <h2 id='perks-heading' className='sr-only'>
+            Our perks
+          </h2>
+
+          <div className='mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8'>
+            <div className='grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-0'>
+              {perks.map((perk) => (
+                <div
+                  key={perk.name}
+                  className='text-center md:flex md:items-start md:text-left lg:block lg:text-center'
+                >
+                  <div className='md:flex-shrink-0'>
+                    <div className='flow-root'>
+                      <img
+                        className='-my-1 mx-auto h-24 w-auto'
+                        src={perk.imageUrl}
+                        alt=''
+                      />
+                    </div>
+                  </div>
+                  <div className='mt-6 md:ml-4 md:mt-0 lg:ml-0 lg:mt-6'>
+                    <h3 className='text-base font-medium text-gray-900'>
+                      {perk.name}
+                    </h3>
+                    <p className='mt-3 text-sm text-gray-500'>
+                      {perk.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
     </Layout>
   )
 }

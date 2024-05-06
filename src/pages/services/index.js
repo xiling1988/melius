@@ -1,5 +1,3 @@
-// import React, { useState, useEffect } from 'react'
-
 import { Fragment, useState } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import {
@@ -301,7 +299,7 @@ const index = () => {
         </div>
         <section aria-labelledby='trending-heading'>
           <div className='mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:pt-32'>
-        <SubjectsHeader />
+            <SubjectsHeader />
             {/* <div className='md:flex md:items-center md:justify-between'>
               <h2
                 id='favorites-heading'

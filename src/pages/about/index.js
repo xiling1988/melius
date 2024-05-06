@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import {
@@ -12,6 +12,8 @@ import {
 } from '@heroicons/react/20/solid'
 import Header from '@/components/About/Header'
 import Layout from '@/components/Layout/Layout'
+import { getAuthors, client, urlFor } from '../../../sanity'
+import Image from 'next/image'
 
 const stats = [
   { label: 'Business was founded', value: '2012' },
@@ -57,16 +59,16 @@ const values = [
     icon: SunIcon,
   },
 ]
-const team = [
-  {
-    name: 'Leslie Alexander',
-    role: 'Co-Founder / CEO',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-    location: 'Toronto, Canada',
-  },
-  // More people...
-]
+// const team = [
+//   {
+//     name: 'Leslie Alexander',
+//     role: 'Co-Founder / CEO',
+//     imageUrl:
+//       'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
+//     location: 'Toronto, Canada',
+//   },
+//   // More people...
+// ]
 const benefits = [
   'Competitive salaries',
   'Flexible work hours',
@@ -78,6 +80,22 @@ const benefits = [
 
 export default function index() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [team, setTeam] = useState([])
+
+  useEffect(() => {
+    const getAuthors = async () => {
+      try {
+        const response = await client.fetch(
+          '*[_type == "author"] {name, "imageUrl": image.asset->url, "bio": bio[0].children[0].text}'
+        )
+        setTeam(response)
+      } catch (error) {
+        console.error('Error fetching authors:', error)
+      }
+    }
+
+    getAuthors()
+  }, [])
 
   return (
     <Layout>
@@ -194,20 +212,22 @@ export default function index() {
             >
               {team.map((person) => (
                 <li key={person.name}>
-                  <img
-                    className='aspect-[14/13] w-full rounded-2xl object-cover'
-                    src={person.imageUrl}
-                    alt=''
-                  />
+                  {person.imageUrl && (
+                    <img
+                      className='aspect-[14/13] w-full rounded-2xl object-cover object-top'
+                      src={urlFor(person.imageUrl)}
+                      alt={person.name}
+                    />
+                  )}
                   <h3 className='mt-6 text-lg font-semibold leading-8 tracking-tight text-white'>
                     {person.name}
                   </h3>
-                  <p className='text-base leading-7 text-gray-300'>
-                    {person.role}
-                  </p>
-                  <p className='text-sm leading-6 text-gray-500'>
-                    {person.location}
-                  </p>
+                  {person.bio && (
+                    <p className='text-base leading-7 text-gray-300'>
+                      {person.bio}
+                    </p>
+                  )}
+                  {/* Render other properties conditionally */}
                 </li>
               ))}
             </ul>
