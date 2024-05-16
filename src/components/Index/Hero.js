@@ -7,9 +7,11 @@ function Hero() {
   const { openModal, defaultUrl } = useModal()
 
   const [rootElement, setRootElement] = useState(null)
+
   useEffect(() => {
     setRootElement(document.getElementById('calendly-root'))
   }, [])
+  
   return (
     <div className='relative isolate overflow-hidden bg-gradient-to-b from-indigo-100/20 pt-14'>
       <div
