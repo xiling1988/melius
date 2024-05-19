@@ -1,3 +1,4 @@
+import ContactPage from './ContactPage'
 export const metadata = {
   title: 'Contact',
   description:
