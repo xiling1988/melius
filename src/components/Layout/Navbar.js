@@ -55,7 +55,7 @@ export default function Navbar() {
               key={item.name}
               href={item.href}
               className={`text-sm font-semibold leading-6 text-${
-                item.href === '/rockstars' ? 'nexusRed underline' : 'gray-900'
+                item.href === '/rockstars' ? 'meliusRed underline' : 'gray-900'
               }`}
             >
               {item.name}
@@ -104,7 +104,7 @@ export default function Navbar() {
                       href={item.href}
                       className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-${
                         item.href === '/rockstars'
-                          ? 'nexusRed underline'
+                          ? 'meliusRed underline'
                           : 'gray-900'
                       } hover:bg-gray-50`}
                     >

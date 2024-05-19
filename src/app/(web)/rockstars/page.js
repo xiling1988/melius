@@ -122,7 +122,7 @@ const Rockstars = () => {
             <div className='mt-4 sm:mt-6'>
               <a
                 href='#'
-                className='inline-block rounded-md border border-transparent bg-nexusRed px-8 py-3 font-medium text-white hover:bg-nexusBlue'
+                className='inline-block rounded-md border border-transparent bg-meliusRed px-8 py-3 font-medium text-white hover:bg-meliusBlue'
               >
                 Your first session here
               </a>
@@ -149,7 +149,7 @@ const Rockstars = () => {
                     className='absolute inset-0 overflow-hidden rounded-lg'
                   >
                     <div className='absolute inset-0 overflow-hidden group-hover:opacity-75'>
-                      <h2 className='text-sky-400 bg-nexusBlue text-3xl font-bold text-center py-16 h-48 z-20'>
+                      <h2 className='text-sky-400 bg-meliusBlue text-3xl font-bold text-center py-16 h-48 z-20'>
                         {collection.name}
                       </h2>
                       <img

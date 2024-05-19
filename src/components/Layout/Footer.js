@@ -77,7 +77,7 @@ const navigation = {
 export default function Footer() {
   const year = new Date().getFullYear()
   return (
-    <footer className='bg-nexusBlue'>
+    <footer className='bg-meliusBlue'>
       <div className='mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8'>
         <nav
           className='-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12'
@@ -87,7 +87,7 @@ export default function Footer() {
             <div key={item.name} className='pb-6'>
               <a
                 href={item.href}
-                className='text-sm leading-6 text-gray-200 hover:text-nexusRed'
+                className='text-sm leading-6 text-gray-200 hover:text-meliusRed'
               >
                 {item.name}
               </a>
@@ -99,7 +99,7 @@ export default function Footer() {
             <a
               key={item.name}
               href={item.href}
-              className='text-nexusRed hover:text-gray-200'
+              className='text-meliusRed hover:text-gray-200'
             >
               <span className='sr-only'>{item.name}</span>
               <item.icon className='h-6 w-6' aria-hidden='true' />
@@ -111,11 +111,11 @@ export default function Footer() {
         </p>
         <p className='text-center mt-8 text-xs'>
           Developed with
-          {<HeartIcon className='inline text-nexusRed w-6 h-6' />} by{' '}
+          {<HeartIcon className='inline text-meliusRed w-6 h-6' />} by{' '}
           <a
             target='_blank'
             href='https://pottwalsolutions.com/'
-            className='underline text-nexusRed'
+            className='underline text-meliusRed'
           >
             Pottwal Solutions
           </a>

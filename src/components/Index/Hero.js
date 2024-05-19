@@ -11,7 +11,7 @@ function Hero() {
   useEffect(() => {
     setRootElement(document.getElementById('calendly-root'))
   }, [])
-  
+
   return (
     <div className='relative isolate overflow-hidden bg-gradient-to-b from-indigo-100/20 pt-14'>
       <div
@@ -22,10 +22,10 @@ function Hero() {
         <div className='mx-auto max-w-2xl lg:mx-0 lg:grid lg:max-w-none lg:grid-cols-2 lg:gap-x-16 lg:gap-y-6 xl:grid-cols-1 xl:grid-rows-1 xl:gap-x-8'>
           <h1 className='max-w-2xl text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl lg:col-span-2 xl:col-auto'>
             Your{' '}
-            <span className='text-nexusBlue'>
+            <span className='text-meliusBlue'>
               Partner in <br></br>
             </span>{' '}
-            Hiring <span className='text-nexusRed'>Excellence</span>
+            Hiring <span className='text-meliusRed'>Excellence</span>
           </h1>
           <div className='mt-6 max-w-xl lg:mt-0 xl:col-end-1 xl:row-start-1'>
             <p className='text-lg leading-8 text-gray-600'>
@@ -38,13 +38,13 @@ function Hero() {
               <CalendlyPopUp />
               <button
                 onClick={() => openModal(defaultUrl)}
-                className='rounded-md bg-nexusBlue hover:bg-nexusRed px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+                className='rounded-md bg-meliusBlue hover:bg-meliusRed px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
               >
                 Modal Button
               </button>
               <a
                 href='#'
-                className='text-sm font-semibold leading-6 text-nexusRed hover:text-nexusBlue'
+                className='text-sm font-semibold leading-6 text-meliusRed hover:text-meliusBlue'
               >
                 Learn more <span aria-hidden='true'>→</span>
               </a>

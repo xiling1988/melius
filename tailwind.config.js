@@ -8,8 +8,8 @@ module.exports = {
     extend: {
       backgroundImage: {},
       colors: {
-        nexusBlue: '#0b4498',
-        nexusRed: '#a91cda',
+        meliusBlue: '#0b4498',
+        meliusRed: '#a91cda',
       },
     },
   },

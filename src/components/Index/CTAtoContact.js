@@ -19,7 +19,7 @@ export default function CTAtoContact() {
         className='absolute inset-x-0 top-0 hidden h-1/2 bg-gray-50 lg:block'
         aria-hidden='true'
       />
-      <div className='mx-auto max-w-7xl bg-nexusBlue lg:bg-transparent lg:px-8'>
+      <div className='mx-auto max-w-7xl bg-meliusBlue lg:bg-transparent lg:px-8'>
         <div className='lg:grid lg:grid-cols-12'>
           <div className='relative z-10 lg:col-span-4 lg:col-start-1 lg:row-start-1 lg:bg-transparent lg:py-16'>
             <div
@@ -37,7 +37,7 @@ export default function CTAtoContact() {
             </div>
           </div>
 
-          <div className='relative bg-nexusBlue lg:col-span-10 lg:col-start-3 lg:row-start-1 lg:grid lg:grid-cols-10 lg:items-center lg:rounded-3xl'>
+          <div className='relative bg-meliusBlue lg:col-span-10 lg:col-start-3 lg:row-start-1 lg:grid lg:grid-cols-10 lg:items-center lg:rounded-3xl'>
             <div
               className='absolute inset-0 hidden overflow-hidden rounded-3xl lg:block'
               aria-hidden='true'
