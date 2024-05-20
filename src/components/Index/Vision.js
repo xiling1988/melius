@@ -1,5 +1,6 @@
 import { CheckCircleIcon } from '@heroicons/react/20/solid'
 import Image from 'next/image'
+import BackgroundWrapper from '../Layout/BackgroundWrapper'
 
 const benefits = [
   'Distribution & Brand Management Company set up and run by FMCG professionals',
@@ -11,13 +12,13 @@ const benefits = [
 export default function Vision() {
   return (
     <div className='bg-meliusBlue py-24 sm:py-32'>
-      <div className='relative isolate'>
+      <BackgroundWrapper>
         <div className='mx-auto max-w-7xl sm:px-6 lg:px-8'>
           <div className='mx-auto flex max-w-2xl flex-col gap-16 bg-white/5 px-6 py-16 ring-1 ring-white/10 sm:rounded-3xl sm:p-8 lg:mx-0 lg:max-w-none lg:flex-row lg:items-center lg:py-20 xl:gap-x-20 xl:px-20'>
             <Image
-            height={100}
-            width={100}
-            unoptimized
+              height={100}
+              width={100}
+              unoptimized
               className='h-96 w-full flex-none rounded-2xl object-cover shadow-xl lg:aspect-square lg:h-auto lg:max-w-sm'
               src='/lense.png'
               alt=''
@@ -27,7 +28,9 @@ export default function Vision() {
                 Our Vision
               </h2>
               <p className='mt-6 text-lg leading-8 text-gray-300'>
-                To be a trusted partner of consumer brands by providing best-in-class Distribution & Brand Management Services to expand consumer and market footprint.
+                To be a trusted partner of consumer brands by providing
+                best-in-class Distribution & Brand Management Services to expand
+                consumer and market footprint.
               </p>
               <ul
                 role='list'
@@ -66,7 +69,7 @@ export default function Vision() {
             }}
           />
         </div>
-      </div>
+      </BackgroundWrapper>
     </div>
   )
 }

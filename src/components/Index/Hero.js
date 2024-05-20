@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useModal } from '@/contexts/ModalContext'
 import { PopupButton } from 'react-calendly'
 import CalendlyPopUp from '../Modal/CalendlyPopUp'
+import ModalButton from '../Layout/ModalButton'
 
 function Hero() {
   const { openModal, defaultUrl } = useModal()
@@ -35,19 +36,8 @@ function Hero() {
               Qui irure qui lorem cupidatat commodo.
             </p>
             <div className='mt-10 flex items-center gap-x-6'>
-              <CalendlyPopUp />
-              <button
-                onClick={() => openModal(defaultUrl)}
-                className='rounded-md bg-meliusBlue hover:bg-meliusRed px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
-              >
-                Modal Button
-              </button>
-              <a
-                href='#'
-                className='text-sm font-semibold leading-6 text-meliusRed hover:text-meliusBlue'
-              >
-                Learn more <span aria-hidden='true'>→</span>
-              </a>
+              <CalendlyPopUp title={'Calendly Call'} />
+              <ModalButton title={'10to8 Call'} />
             </div>
           </div>
           <img

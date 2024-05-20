@@ -1,7 +1,8 @@
+'use client'
 import React, { useEffect, useState } from 'react'
 import { PopupButton } from 'react-calendly'
 
-const CalendlyPopUp = () => {
+const CalendlyPopUp = ({ title }) => {
   const [rootElement, setRootElement] = useState(null)
 
   useEffect(() => {
@@ -18,7 +19,7 @@ const CalendlyPopUp = () => {
            * specify the rootElement property to ensure that the modal is inserted into the correct domNode.
            */
           rootElement={document.getElementById('root')}
-          text='Get Started'
+          text={title}
         />
       )}
     </div>
