@@ -109,7 +109,7 @@ export default function Footer() {
         <p className='mt-10 text-center text-xs leading-5 text-gray-500'>
           &copy; {year} Melius Consulting, LLC. All rights reserved.
         </p>
-        <p className='text-center mt-8 text-xs'>
+        <p className='text-center mt-8 text-xs text-white'>
           Developed with
           {<HeartIcon className='inline text-meliusRed w-6 h-6' />} by{' '}
           <a

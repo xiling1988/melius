@@ -24,7 +24,7 @@ export const metadata = {
 
 function RootLayout({ children }) {
   return (
-    <html lang='en' id='root'>
+    <html lang='en' id='root' class='scroll-smooth'>
       <body>
         <div className='relative'>
           <ModalProvider>

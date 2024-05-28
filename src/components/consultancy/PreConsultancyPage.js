@@ -1,6 +1,7 @@
 import BackgroundWrapper from '@/components/Layout/BackgroundWrapper'
 import ModalButton from '@/components/Layout/ModalButton'
 import CalendlyPopUp from '@/components/Modal/CalendlyPopUp'
+import ServicesHeader from '@/components/services/ServicesHeader'
 import { useModal } from '@/contexts/ModalContext'
 import {
   CloudArrowUpIcon,
@@ -32,7 +33,11 @@ const features = [
 const page = () => {
   return (
     <>
-      <div className='bg-white px-3 pt-24 sm:pt-32 sm:pb-16 lg:px-8'>
+      <ServicesHeader />
+      <div
+        id='consultancy'
+        className='bg-white px-3 pt-24 sm:pt-32 sm:pb-16 lg:px-8'
+      >
         <BackgroundWrapper>
           <div className='mx-auto max-w-7xl md:px-6 lg:px-8'>
             <div className='grid grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:grid-cols-2 lg:items-start'>
@@ -105,7 +110,10 @@ const page = () => {
           </div>
         </BackgroundWrapper>
       </div>
-      <div className='bg-white px-6 lg:px-8 pb-20 -mt-12 lg:mt-0'>
+      <div
+        id='hiring'
+        className='bg-white px-6 pt-12 lg:px-8 pb-20 -mt-12 lg:mt-0'
+      >
         <BackgroundWrapper>
           <div className='mx-auto max-w-7xl md:px-6 lg:px-8'>
             <div className='grid grid-cols-1 gap-x-24 gap-y-0 sm:gap-y-20 lg:grid-cols-2 lg:items-start'>

@@ -1,86 +1,194 @@
-import Image from 'next/image'
-import consultancyPic from '../../../../public/service-consult.jpeg'
-import recruitmentPic from '../../../../public/service-recruitment.png'
 import BackgroundWrapper from '@/components/Layout/BackgroundWrapper'
-import Link from 'next/link'
+import ModalButton from '@/components/Layout/ModalButton'
+import CalendlyPopUp from '@/components/Modal/CalendlyPopUp'
+import ServicesHeader from '@/components/services/ServicesHeader'
+import { useModal } from '@/contexts/ModalContext'
+import {
+  CloudArrowUpIcon,
+  LockClosedIcon,
+  ServerIcon,
+} from '@heroicons/react/20/solid'
 
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
-*/
-function Services() {
+const features = [
+  {
+    name: 'Push to deploy.',
+    description:
+      'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.',
+    icon: CloudArrowUpIcon,
+  },
+  {
+    name: 'SSL certificates.',
+    description:
+      'Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo.',
+    icon: LockClosedIcon,
+  },
+  {
+    name: 'Database backups.',
+    description:
+      'Ac tincidunt sapien vehicula erat auctor pellentesque rhoncus. Et magna sit morbi lobortis.',
+    icon: ServerIcon,
+  },
+]
+
+const page = () => {
   return (
-    <div className='bg-gray-50'>
-      <BackgroundWrapper colorFrom={'meliusBlue'} colorTo={'meliusRed'}>
-        <div className='mx-auto max-w-2xl px-4 py-24 sm:px-6 sm:py-22 lg:max-w-7xl lg:px-8'>
-          {/* Details section */}
-          <section aria-labelledby='details-heading'>
-            <div className='flex flex-col py-20 items-center text-center'>
-              <h2
-                id='details-heading'
-                className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'
-              >
-                The Fine Details
-              </h2>
-              <p className='mt-3 max-w-3xl text-lg text-gray-600'>
-                Our patented padded snack sleeve construction protects your
-                favorite treats from getting smooshed during all-day adventures,
-                long shifts at work, and tough travel schedules.
-              </p>
-            </div>
+    <>
+      <ServicesHeader />
+      <section
+        id='consultancy'
+        className='bg-white px-3 pt-24 sm:pt-32 sm:pb-16 lg:px-8'
+      >
+        <BackgroundWrapper>
+          <div className='mx-auto max-w-7xl md:px-6 lg:px-8'>
+            <div className='grid grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:grid-cols-2 lg:items-start'>
+              <div className='px-6 lg:px-0 lg:pr-4 lg:pt-4'>
+                <div className='mx-auto max-w-2xl lg:mx-0 lg:max-w-lg'>
+                  <h2 className='text-base font-semibold leading-7 text-meliusBlue'>
+                    Optimize your Business
+                  </h2>
+                  <p className='mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
+                    HR Consultancy
+                  </p>
+                  <p className='text-meliusRed font-bold italic lg:text-center'>
+                    By Melius
+                  </p>
+                  <p className='mt-6 text-lg leading-8 text-gray-600'>
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                    Maiores impedit perferendis suscipit eaque, iste dolor
+                    cupiditate blanditiis ratione.
+                  </p>
+                  <iframe
+                    className='mx-auto block lg:hidden my-8 rounded-xl text-center w-full h-26'
+                    width='560'
+                    height='315'
+                    src='https://www.youtube.com/embed/Hq7VgnlqS6g?si=OIlGneeNUcJ8cpco'
+                    title='YouTube video player'
+                    frameborder='0'
+                    allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+                    referrerpolicy='strict-origin-when-cross-origin'
+                    allowfullscreen
+                  ></iframe>
+                  <div className='text-center lg:hidden'>
+                    <ModalButton title='Book your Call!' />
+                  </div>
 
-            <div className='mt-16 grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:gap-x-8'>
-              <Link href={'/services/consultancy'}>
-                <div className='aspect-h-2 aspect-w-3 w-full overflow-hidden rounded-lg'>
-                  <Image
-                    // width={100}
-                    // height={100}
-                    src={consultancyPic}
-                    alt='Drawstring top with elastic loop closure and textured interior padding.'
-                    className='h-full w-full object-cover object-center'
-                  />
+                  <dl className='mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none'>
+                    {features.map((feature) => (
+                      <div key={feature.name} className='relative pl-9'>
+                        <dt className='inline font-semibold text-gray-900'>
+                          <feature.icon
+                            className='absolute left-1 top-1 h-5 w-5 text-meliusBlue'
+                            aria-hidden='true'
+                          />
+                          {feature.name}
+                        </dt>{' '}
+                        <dd className='inline'>{feature.description}</dd>
+                      </div>
+                    ))}
+                  </dl>
                 </div>
-                <p className='mt-8 text-base text-gray-500'>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi
-                  eos atque tempore dolores, molestiae nulla recusandae quam
-                  necessitatibus blanditiis! Ratione non, quidem dignissimos
-                  amet ea optio recusandae veniam fuga. Quibusdam.
-                </p>
-              </Link>
-              <Link href={'/services/hiring-excellence'}>
-                <div className='aspect-h-2 aspect-w-3 w-full overflow-hidden rounded-lg'>
-                  <Image
-                    // width={100}
-                    // height={100}
-                    src={recruitmentPic}
-                    alt='Front zipper pouch with included key ring.'
-                    className='h-full w-full object-cover object-center'
-                  />
+              </div>
+              <div className='sm:px-6 lg:px-0 my-auto'>
+                <div className='py-12'>
+                  <iframe
+                    className='mx-auto hidden lg:block my-auto rounded-xl text-center w-full h-96'
+                    width='560'
+                    height='315'
+                    src='https://www.youtube.com/embed/Hq7VgnlqS6g?si=OIlGneeNUcJ8cpco'
+                    title='YouTube video player'
+                    frameborder='0'
+                    allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+                    referrerpolicy='strict-origin-when-cross-origin'
+                    allowfullscreen
+                  ></iframe>
+                  <div className='mx-auto text-center mt-10 hidden lg:block'>
+                    <ModalButton title='Book your Call!' />
+                  </div>
                 </div>
-                <p className='mt-8 text-base text-gray-500'>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Nesciunt ex ratione corrupti incidunt cumque? Pariatur,
-                  veritatis molestiae placeat quia dolorum ipsam nostrum,
-                  excepturi expedita eum porro voluptatem consequuntur, nobis
-                  ratione.
-                </p>
-              </Link>
+              </div>
             </div>
-          </section>
-        </div>
-      </BackgroundWrapper>
-    </div>
+          </div>
+        </BackgroundWrapper>
+      </section>
+      <section
+        id='hiring'
+        className='bg-white px-6 pt-12 lg:px-8 pb-20 -mt-12 lg:mt-0'
+      >
+        <BackgroundWrapper>
+          <div className='mx-auto max-w-7xl md:px-6 lg:px-8'>
+            <div className='grid grid-cols-1 gap-x-24 gap-y-0 sm:gap-y-20 lg:grid-cols-2 lg:items-start'>
+              <div className='sm:px-6 lg:px-0 my-auto'>
+                <div className='py-12 hidden lg:block'>
+                  <iframe
+                    className='mx-auto my-auto rounded-xl text-center w-full h-96'
+                    width='560'
+                    height='315'
+                    src='https://www.youtube.com/embed/9VrwU6RW-vg?si=w4omks9ehQsNaF_t'
+                    title='YouTube video player'
+                    frameborder='0'
+                    allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+                    referrerpolicy='strict-origin-when-cross-origin'
+                    allowfullscreen
+                  ></iframe>
+                  <div className='mx-auto text-center mt-10'>
+                    <CalendlyPopUp title='Book your Call!' />
+                  </div>
+                </div>
+              </div>
+              <div className='px-6 lg:px-0 lg:pr-4 lg:pt-4'>
+                <div className='mx-auto max-w-2xl lg:mx-0 lg:max-w-lg'>
+                  <h2 className='text-base font-semibold leading-7 text-meliusBlue'>
+                    Optimize your Business
+                  </h2>
+                  <p className='mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
+                    What is <span className='italic'>#HiringExcellence</span>
+                  </p>
+                  <p className='text-meliusRed font-bold italic lg:text-right lg:mr-16'>
+                    By Melius
+                  </p>
+                  <p className='mt-6 text-lg leading-8 text-gray-600'>
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                    Maiores impedit perferendis suscipit eaque, iste dolor
+                    cupiditate blanditiis ratione.
+                  </p>
+                  <div className='py-12 lg:hidden'>
+                    <iframe
+                      className='mx-auto my-auto rounded-xl text-center w-full h-96'
+                      width='560'
+                      height='315'
+                      src='https://www.youtube.com/embed/9VrwU6RW-vg?si=w4omks9ehQsNaF_t'
+                      title='YouTube video player'
+                      frameborder='0'
+                      allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+                      referrerpolicy='strict-origin-when-cross-origin'
+                      allowfullscreen
+                    ></iframe>
+                    <div className='mx-auto text-center mt-10'>
+                      <CalendlyPopUp title='Book your Call!' />
+                    </div>
+                  </div>
+                  <dl className='mt-4 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none'>
+                    {features.map((feature) => (
+                      <div key={feature.name} className='relative pl-9'>
+                        <dt className='inline font-semibold text-gray-900'>
+                          <feature.icon
+                            className='absolute left-1 top-1 h-5 w-5 text-meliusBlue'
+                            aria-hidden='true'
+                          />
+                          {feature.name}
+                        </dt>{' '}
+                        <dd className='inline'>{feature.description}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </BackgroundWrapper>
+      </section>
+    </>
   )
 }
 
-export default Services
+export default page
