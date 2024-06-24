@@ -2,7 +2,7 @@ import { defineType, defineField } from 'sanity'
 import { PlayIcon } from '@sanity/icons'
 import { YouTubePreview } from './YoutubePreview'
 
-export const youtube = defineType({
+const youtube = defineType({
   name: 'youtube',
   type: 'object',
   title: 'YouTube Embed',
@@ -21,3 +21,5 @@ export const youtube = defineType({
     preview: YouTubePreview,
   },
 })
+
+export default youtube

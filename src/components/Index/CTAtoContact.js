@@ -1,4 +1,6 @@
+import Link from 'next/link'
 import BackgroundWrapper from '../Layout/BackgroundWrapper'
+import { ArrowLongRightIcon } from '@heroicons/react/24/outline'
 
 /*
   This example requires some changes to your config:
@@ -117,20 +119,30 @@ export default function CTAtoContact() {
                   className='text-3xl font-bold tracking-tight text-white'
                   id='join-heading'
                 >
-                  Your Brand in the{' '}
-                  <span className='text-meliusRed'>Spotlight</span>
+                  Get in
+                  <span className='text-meliusRed'> Touch</span>
                 </h2>
                 <p className='text-lg text-white'>
-                  Varius facilisi mauris sed sit. Non sed et duis dui leo,
-                  vulputate id malesuada non. Cras aliquet purus dui laoreet
-                  diam sed lacus, fames.
+                  Ready to take your business to the next level? Book a call
+                  today to learn more about our HR consulting and staffing
+                  solutions.
                 </p>
-                <a
+                <Link
                   className='block w-full rounded-md border border-transparent bg-white px-5 py-3 text-center text-base font-medium text-meliusRed shadow-md hover:bg-meliusRed hover:text-meliusBlue transition-all sm:inline-block sm:w-auto'
                   href='#'
                 >
-                  Get in touch
-                </a>
+                  Book a Call
+                </Link>
+                <p className='text-white text-xl py-2 italic font-bold'>
+                  Feeling shy?
+                </p>
+                <Link
+                  href={'/contact'}
+                  className='text-lg text-meliusRed hover:underline rounded'
+                >
+                  Send us a Contact Request{' '}
+                  <ArrowLongRightIcon className='h-4 inline' />
+                </Link>
               </div>
             </div>
           </div>

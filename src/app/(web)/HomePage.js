@@ -2,7 +2,7 @@
 import Layout from '@/components/Layout/Layout'
 import Hero from '@/components/Index/Hero'
 import Vision from '@/components/Index/Vision'
-import Services from '@/components/Index/Services'
+import Services from '@/components/Index/serviceSection/Services'
 import CTAtoContact from '@/components/Index/CTAtoContact'
 import Head from 'next/head'
 import CalendlyButton from '@/components/Modal/CalendlyButton'
@@ -12,8 +12,8 @@ function HomePage() {
     <div>
       <CalendlyButton />
       <Hero />
-      <Vision />
       <Services />
+      <Vision />
       <CTAtoContact />
     </div>
   )

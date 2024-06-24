@@ -3,10 +3,10 @@ import Image from 'next/image'
 import BackgroundWrapper from '../Layout/BackgroundWrapper'
 
 const benefits = [
-  'Distribution & Brand Management Company set up and run by FMCG professionals',
-  'Deep Market expertise & networks in Middle East, CIS & Africa markets',
-  'Seed, Lead, Grow Model for brands in existing or New markets',
-  'Market access and Brand Management services',
+  'Ethical Pricing: Transparent and fair pricing models.',
+  'Quality: Guaranteed high quality shortlists',
+  'Innovative Solutions: Custom-built programs tailored to your business needs.',
+  'Speed: Guaranteed interviews within three weeks.',
 ]
 
 export default function Vision() {
@@ -25,7 +25,7 @@ export default function Vision() {
             />
             <div className='w-full flex-auto'>
               <h2 className='text-3xl font-bold tracking-tight text-white sm:text-4xl'>
-                Our Vision
+              Why Choose Melius for Your HR and Staffing Needs?
               </h2>
               <p className='mt-6 text-lg leading-8 text-gray-300'>
                 To be a trusted partner of consumer brands by providing
@@ -39,7 +39,7 @@ export default function Vision() {
                 {benefits.map((benefit) => (
                   <li key={benefit} className='flex gap-x-3'>
                     <CheckCircleIcon
-                      className='h-7 w-5 flex-none'
+                      className='h-7 w-5 flex-none text-meliusBlue'
                       aria-hidden='true'
                     />
                     {benefit}
@@ -49,9 +49,9 @@ export default function Vision() {
               <div className='mt-10 flex'>
                 <a
                   href='#'
-                  className='text-sm font-semibold leading-6 text-indigo-400'
+                  className='text-sm font-semibold leading-6 text-meliusRed'
                 >
-                  Find out more... <span aria-hidden='true'>&rarr;</span>
+                  Find out more about us <span aria-hidden='true'>&rarr;</span>
                 </a>
               </div>
             </div>
