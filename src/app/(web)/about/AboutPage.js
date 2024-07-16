@@ -1,299 +1,526 @@
 'use client'
-import { useEffect, useState } from 'react'
-import { Dialog } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import {
-  AcademicCapIcon,
-  CheckCircleIcon,
-  HandRaisedIcon,
-  RocketLaunchIcon,
-  SparklesIcon,
-  SunIcon,
-  UserGroupIcon,
-} from '@heroicons/react/20/solid'
-import Header from '@/components/About/Header'
-import Layout from '@/components/Layout/Layout'
-import { getAuthors, client, urlFor } from '../../../../sanity'
-import Image from 'next/image'
+import BackgroundWrapper from '@/components/Layout/BackgroundWrapper'
+import { useState } from 'react'
+import AliceCarousel from 'react-alice-carousel'
+import 'react-alice-carousel/lib/alice-carousel.css'
 
 const stats = [
-  { label: 'Business was founded', value: '2012' },
-  { label: 'People on the team', value: '120+' },
-  { label: 'Users on the platform', value: '250k' },
-  { label: 'Paid out to creators', value: '$70M' },
+  { label: 'Transactions every 24 hours', value: '44 million' },
+  { label: 'Assets under holding', value: '$119 trillion' },
+  { label: 'New users annually', value: '46,000' },
 ]
 const values = [
   {
-    name: 'Be world-class.',
+    name: 'Be world-class',
     description:
-      'Lorem ipsum, dolor sit amet consectetur adipisicing elit aute id magna.',
-    icon: RocketLaunchIcon,
+      'Aut illo quae. Ut et harum ea animi natus. Culpa maiores et sed sint et magnam exercitationem quia. Ullam voluptas nihil vitae dicta molestiae et. Aliquid velit porro vero.',
   },
   {
-    name: 'Take responsibility.',
+    name: 'Share everything you know',
     description:
-      'Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo.',
-    icon: HandRaisedIcon,
+      'Mollitia delectus a omnis. Quae velit aliquid. Qui nulla maxime adipisci illo id molestiae. Cumque cum ut minus rerum architecto magnam consequatur. Quia quaerat minima.',
   },
   {
-    name: 'Be supportive.',
+    name: 'Always learning',
     description:
-      'Ac tincidunt sapien vehicula erat auctor pellentesque rhoncus voluptas blanditiis et.',
-    icon: UserGroupIcon,
+      'Aut repellendus et officiis dolor possimus. Deserunt velit quasi sunt fuga error labore quia ipsum. Commodi autem voluptatem nam. Quos voluptatem totam.',
   },
   {
-    name: 'Always learning.',
+    name: 'Be supportive',
     description:
-      'Iure sed ab. Aperiam optio placeat dolor facere. Officiis pariatur eveniet atque et dolor.',
-    icon: AcademicCapIcon,
+      'Magnam provident veritatis odit. Vitae eligendi repellat non. Eum fugit impedit veritatis ducimus. Non qui aspernatur laudantium modi. Praesentium rerum error deserunt harum.',
   },
   {
-    name: 'Share everything you know.',
+    name: 'Take responsibility',
     description:
-      'Laudantium tempora sint ut consectetur ratione. Ut illum ut rem numquam fuga delectus.',
-    icon: SparklesIcon,
+      'Sit minus expedita quam in ullam molestiae dignissimos in harum. Tenetur dolorem iure. Non nesciunt dolorem veniam necessitatibus laboriosam voluptas perspiciatis error.',
   },
   {
-    name: 'Enjoy downtime.',
+    name: 'Enjoy downtime',
     description:
-      'Culpa dolorem voluptatem velit autem rerum qui et corrupti. Quibusdam quo placeat.',
-    icon: SunIcon,
+      'Ipsa in earum deserunt aut. Quos minus aut animi et soluta. Ipsum dicta ut quia eius. Possimus reprehenderit iste aspernatur ut est velit consequatur distinctio.',
   },
 ]
-// const team = [
-//   {
-//     name: 'Leslie Alexander',
-//     role: 'Co-Founder / CEO',
-//     imageUrl:
-//       'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-//     location: 'Toronto, Canada',
-//   },
-//   // More people...
-// ]
-const benefits = [
-  'Competitive salaries',
-  'Flexible work hours',
-  '30 days of paid vacation',
-  'Annual team retreats',
-  'Benefits for you and your family',
-  'A great work environment',
+const team = [
+  {
+    name: 'Michael Foster',
+    role: 'Co-Founder / CTO',
+    imageUrl:
+      'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
+  },
+  // More people...
+]
+const blogPosts = [
+  {
+    id: 1,
+    title: 'Vel expedita assumenda placeat aut nisi optio voluptates quas',
+    href: '#',
+    description:
+      'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3603&q=80',
+    date: 'Mar 16, 2020',
+    datetime: '2020-03-16',
+    author: {
+      name: 'Michael Foster',
+      imageUrl:
+        'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    },
+  },
+  // More posts...
+]
+const logos = [
+  <img
+    className='col-span-2 max-h-12 w-full object-contain lg:col-span-1'
+    src='https://tailwindui.com/img/logos/158x48/transistor-logo-gray-900.svg'
+    alt='Transistor'
+    width={158}
+    height={48}
+  />,
+  <img
+    className='col-span-2 max-h-12 w-full object-contain lg:col-span-1'
+    src='https://tailwindui.com/img/logos/158x48/reform-logo-gray-900.svg'
+    alt='Transistor'
+    width={158}
+    height={48}
+  />,
+  <img
+    className='col-span-2 max-h-12 w-full object-contain lg:col-span-1'
+    src='https://tailwindui.com/img/logos/158x48/tuple-logo-gray-900.svg'
+    alt='Transistor'
+    width={158}
+    height={48}
+  />,
+  <img
+    className='col-span-2 max-h-12 w-full object-contain lg:col-span-1'
+    src='https://tailwindui.com/img/logos/158x48/savvycal-logo-gray-900.svg'
+    alt='Transistor'
+    width={158}
+    height={48}
+  />,
+  <img
+    className='col-span-2 max-h-12 w-full object-contain lg:col-span-1'
+    src='https://tailwindui.com/img/logos/158x48/savvycal-logo-gray-900.svg'
+    alt='Transistor'
+    width={158}
+    height={48}
+  />,
+  <img
+    className='col-span-2 max-h-12 w-full object-contain lg:col-span-1'
+    src='https://tailwindui.com/img/logos/158x48/statamic-logo-gray-900.svg'
+    alt='Transistor'
+    width={158}
+    height={48}
+  />,
 ]
 
-export const metadata = {
-  title: 'About',
-  description:
-    'Welcome to a new standard in HR & Hiring Consultancy. Leadership, talent, people and organisational solutions to unlock our true potential.',
-}
+const handleDragStart = (e) => e.preventDefault()
 
-export default function AboutPage() {
+function AboutPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [team, setTeam] = useState([])
-
-  useEffect(() => {
-    const getAuthors = async () => {
-      try {
-        const response = await client.fetch(
-          '*[_type == "author"] {name, "imageUrl": image.asset->url, "bio": bio[0].children[0].text}'
-        )
-        setTeam(response)
-      } catch (error) {
-        console.error('Error fetching authors:', error)
-      }
-    }
-
-    getAuthors()
-  }, [])
 
   return (
-    <div className='bg-meliusBlue'>
-      <div className='relative isolate'>
-        <Header />
-
-        {/* Content section */}
-        <div className='mx-auto mt-20 max-w-7xl px-6 lg:px-8'>
-          <div className='mx-auto max-w-2xl lg:mx-0 lg:max-w-none'>
-            <div className='grid max-w-xl grid-cols-1 gap-8 text-base leading-7 text-gray-300 lg:max-w-none lg:grid-cols-2'>
-              <div>
-                <p>
-                  Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget
-                  risus enim. Mattis mauris semper sed amet vitae sed turpis id.
-                  Id dolor praesent donec est. Odio penatibus risus viverra
-                  tellus varius sit neque erat velit. Faucibus commodo massa
-                  rhoncus, volutpat. Dignissim sed eget risus enim. Mattis
-                  mauris semper sed amet vitae sed turpis id.
-                </p>
-                <p className='mt-8'>
-                  Et vitae blandit facilisi magna lacus commodo. Vitae sapien
-                  duis odio id et. Id blandit molestie auctor fermentum
-                  dignissim. Lacus diam tincidunt ac cursus in vel. Mauris
-                  varius vulputate et ultrices hac adipiscing egestas.
-                </p>
-              </div>
-              <div>
-                <p>
-                  Erat pellentesque dictumst ligula porttitor risus eget et
-                  eget. Ultricies tellus felis id dignissim eget. Est augue
-                  maecenas risus nulla ultrices congue nunc tortor. Enim et
-                  nesciunt doloremque nesciunt voluptate.
-                </p>
-                <p className='mt-8'>
-                  Et vitae blandit facilisi magna lacus commodo. Vitae sapien
-                  duis odio id et. Id blandit molestie auctor fermentum
-                  dignissim. Lacus diam tincidunt ac cursus in vel. Mauris
-                  varius vulputate et ultrices hac adipiscing egestas. Iaculis
-                  convallis ac tempor et ut. Ac lorem vel integer orci.
-                </p>
+    <div className='bg-white'>
+      <main className='isolate'>
+        {/* Hero section */}
+        <div className='relative isolate -z-10'>
+          <BackgroundWrapper colorFrom='meliusRed' colorTo='white'>
+            <svg
+              className='absolute inset-x-0 top-0 -z-10 h-[64rem] w-full stroke-gray-200 [mask-image:radial-gradient(32rem_32rem_at_center,white,transparent)]'
+              aria-hidden='true'
+            >
+              <defs>
+                <pattern
+                  id='1f932ae7-37de-4c0a-a8b0-a6e3b4d44b84'
+                  width={200}
+                  height={200}
+                  x='50%'
+                  y={-1}
+                  patternUnits='userSpaceOnUse'
+                >
+                  <path d='M.5 200V.5H200' fill='none' />
+                </pattern>
+              </defs>
+              <svg x='50%' y={-1} className='overflow-visible fill-gray-50'>
+                <path
+                  d='M-200 0h201v201h-201Z M600 0h201v201h-201Z M-400 600h201v201h-201Z M200 800h201v201h-201Z'
+                  strokeWidth={0}
+                />
+              </svg>
+              <rect
+                width='100%'
+                height='100%'
+                strokeWidth={0}
+                fill='url(#1f932ae7-37de-4c0a-a8b0-a6e3b4d44b84)'
+              />
+            </svg>
+            <div
+              className='absolute left-1/2 right-0 top-0 -z-10 -ml-24 transform-gpu overflow-hidden blur-3xl lg:ml-24 xl:ml-48'
+              aria-hidden='true'
+            >
+              <div
+                className='aspect-[801/1036] w-[50.0625rem] bg-gradient-to-tr from-meliusRed to-meliusBlue opacity-30'
+                style={{
+                  clipPath:
+                    'polygon(63.1% 29.5%, 100% 17.1%, 76.6% 3%, 48.4% 0%, 44.6% 4.7%, 54.5% 25.3%, 59.8% 49%, 55.2% 57.8%, 44.4% 57.2%, 27.8% 47.9%, 35.1% 81.5%, 0% 97.7%, 39.2% 100%, 35.2% 81.4%, 97.2% 52.8%, 63.1% 29.5%)',
+                }}
+              />
+            </div>
+            <div className='overflow-hidden'>
+              <div className='mx-auto max-w-7xl px-6 pb-32 pt-36 sm:pt-60 lg:px-8 lg:pt-32'>
+                <div className='mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center'>
+                  <div className='w-full max-w-xl lg:shrink-0 xl:max-w-2xl'>
+                    <h1 className='text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl'>
+                      Transforming the Way Businesses{' '}
+                      <span className='text-meliusRed'>Thrive</span>
+                    </h1>
+                    <p className='relative font-bold mt-3 text-lg leading-8 text-meliusBlue sm:max-w-md lg:max-w-none'>
+                      At Melius, we are dedicated to revolutionizing HR
+                      consultancy and staffing solutions to help businesses
+                      achieve their full potential.
+                    </p>
+                    <p className='relative mt-6 text-lg leading-8 text-meliusBlue sm:max-w-md lg:max-w-none'>
+                      We pride ourselves on being at the forefront of HR
+                      consultancy and staffing services. Our mission is to
+                      empower organizations by providing innovative solutions
+                      that drive growth, enhance leadership, and foster a
+                      productive work environment.
+                    </p>
+                  </div>
+                  <div className='mt-14 flex justify-end gap-8 sm:-mt-44 sm:justify-start sm:pl-20 lg:mt-0 lg:pl-0'>
+                    <div className='ml-auto w-44 flex-none space-y-8 pt-32 sm:ml-0 sm:pt-80 lg:order-last lg:pt-36 xl:order-none xl:pt-80'>
+                      <div className='relative'>
+                        <img
+                          src='https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=528&q=80'
+                          alt=''
+                          className='aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg'
+                        />
+                        <div className='pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10' />
+                      </div>
+                    </div>
+                    <div className='mr-auto w-44 flex-none space-y-8 sm:mr-0 sm:pt-52 lg:pt-36'>
+                      <div className='relative'>
+                        <img
+                          src='https://images.unsplash.com/photo-1485217988980-11786ced9454?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=528&q=80'
+                          alt=''
+                          className='aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg'
+                        />
+                        <div className='pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10' />
+                      </div>
+                      <div className='relative'>
+                        <img
+                          src='https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&crop=focalpoint&fp-x=.4&w=396&h=528&q=80'
+                          alt=''
+                          className='aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg'
+                        />
+                        <div className='pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10' />
+                      </div>
+                    </div>
+                    <div className='w-44 flex-none space-y-8 pt-32 sm:pt-0'>
+                      <div className='relative'>
+                        <img
+                          src='https://images.unsplash.com/photo-1670272504528-790c24957dda?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&crop=left&w=400&h=528&q=80'
+                          alt=''
+                          className='aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg'
+                        />
+                        <div className='pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10' />
+                      </div>
+                      <div className='relative'>
+                        <img
+                          src='https://images.unsplash.com/photo-1670272505284-8faba1c31f7d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=528&q=80'
+                          alt=''
+                          className='aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg'
+                        />
+                        <div className='pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10' />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <dl className='mt-16 grid grid-cols-1 gap-x-8 gap-y-12 sm:mt-20 sm:grid-cols-2 sm:gap-y-16 lg:mt-28 lg:grid-cols-4'>
-              {stats.map((stat, statIdx) => (
-                <div
-                  key={statIdx}
-                  className='flex flex-col-reverse gap-y-3 border-l border-white/20 pl-6'
-                >
-                  <dt className='text-base leading-7 text-gray-300'>
-                    {stat.label}
-                  </dt>
-                  <dd className='text-3xl font-semibold tracking-tight text-white'>
-                    {stat.value}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </div>
+          </BackgroundWrapper>
         </div>
+
+        {/* Content section */}
+        <BackgroundWrapper colorFrom='white' colorTo='meliusRed'>
+          <div className='mx-auto -mt-12 max-w-7xl px-6 sm:mt-0 lg:px-8 xl:-mt-8'>
+            <div className='mx-auto max-w-2xl lg:mx-0 lg:max-w-none'>
+              <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
+                Our mission
+              </h2>
+              <div className='mt-6 flex flex-col gap-x-8 gap-y-20 lg:flex-row'>
+                <div className='lg:w-full lg:max-w-2xl lg:flex-auto'>
+                  <p className='text-xl leading-8 text-gray-600'>
+                    At Melius, our mission is to redefine the standards of HR
+                    consultancy and staffing by delivering tailored solutions
+                    that meet the unique needs of our clients. We strive to
+                    unlock the full potential of businesses and individuals
+                    through comprehensive consulting and efficient recruitment
+                    services.
+                  </p>
+                  <div className='mt-10 max-w-xl text-base leading-7 text-gray-700'>
+                    <p>
+                      Faucibus commodo massa rhoncus, volutpat. Dignissim sed
+                      eget risus enim. Mattis mauris semper sed amet vitae sed
+                      turpis id. Id dolor praesent donec est. Odio penatibus
+                      risus viverra tellus varius sit neque erat velit. Faucibus
+                      commodo massa rhoncus, volutpat. Dignissim sed eget risus
+                      enim. Mattis mauris semper sed amet vitae sed turpis id.
+                    </p>
+                    <p className='mt-10'>
+                      Et vitae blandit facilisi magna lacus commodo. Vitae
+                      sapien duis odio id et. Id blandit molestie auctor
+                      fermentum dignissim. Lacus diam tincidunt ac cursus in
+                      vel. Mauris varius vulputate et ultrices hac adipiscing
+                      egestas. Iaculis convallis ac tempor et ut. Ac lorem vel
+                      integer orci.
+                    </p>
+                  </div>
+                </div>
+                <div className='lg:flex lg:flex-auto lg:justify-center'>
+                  <dl className='w-64 space-y-8 xl:w-80'>
+                    {stats.map((stat) => (
+                      <div
+                        key={stat.label}
+                        className='flex flex-col-reverse gap-y-4'
+                      >
+                        <dt className='text-base leading-7 text-gray-600'>
+                          {stat.label}
+                        </dt>
+                        <dd className='text-5xl font-semibold tracking-tight text-gray-900'>
+                          {stat.value}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </BackgroundWrapper>
 
         {/* Image section */}
         <div className='mt-32 sm:mt-40 xl:mx-auto xl:max-w-7xl xl:px-8'>
           <img
-            src='https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2894&q=80'
+            src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80'
             alt=''
-            className='aspect-[9/4] w-full object-cover xl:rounded-3xl'
+            className='aspect-[5/2] w-full object-cover xl:rounded-3xl'
           />
         </div>
 
         {/* Values section */}
-        <div className='mx-auto mt-32 max-w-7xl px-6 sm:mt-40 lg:px-8'>
-          <div className='mx-auto max-w-2xl lg:mx-0'>
-            <h2 className='text-3xl font-bold tracking-tight text-white sm:text-4xl'>
-              Our values
-            </h2>
-            <p className='mt-6 text-lg leading-8 text-gray-300'>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores
-              impedit perferendis suscipit eaque, iste dolor cupiditate
-              blanditiis.
-            </p>
+        <BackgroundWrapper colorFrom='meliusRed' colorTo='meliusRed'>
+          <div className='mx-auto mt-32 max-w-7xl px-6 sm:mt-40 lg:px-8'>
+            <div className='mx-auto max-w-2xl lg:mx-0'>
+              <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
+                Our values
+              </h2>
+              <p className='mt-6 text-lg leading-8 text-gray-600'>
+                Lorem ipsum dolor sit amet consect adipisicing elit. Possimus
+                magnam voluptatum cupiditate veritatis in accusamus quisquam.
+              </p>
+            </div>
+            <dl className='mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 text-base leading-7 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
+              {values.map((value) => (
+                <div key={value.name}>
+                  <dt className='font-semibold text-gray-900'>{value.name}</dt>
+                  <dd className='mt-1 text-gray-600'>{value.description}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
-          <dl className='mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 text-base leading-7 text-gray-300 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:gap-x-16'>
-            {values.map((value) => (
-              <div key={value.name} className='relative pl-9'>
-                <dt className='inline font-semibold text-white'>
-                  <value.icon
-                    className='absolute left-1 top-1 h-5 w-5 text-indigo-500'
-                    aria-hidden='true'
-                  />
-                  {value.name}
-                </dt>{' '}
-                <dd className='inline'>{value.description}</dd>
-              </div>
-            ))}
-          </dl>
+        </BackgroundWrapper>
+
+        {/* Logo cloud */}
+        <div className='relative isolate -z-10 mt-32 sm:mt-48'>
+          <div className='absolute inset-x-0 top-1/2 -z-10 flex -translate-y-1/2 justify-center overflow-hidden [mask-image:radial-gradient(50%_45%_at_50%_55%,white,transparent)]'>
+            <svg
+              className='h-[40rem] w-[80rem] flex-none stroke-gray-200'
+              aria-hidden='true'
+            >
+              <defs>
+                <pattern
+                  id='e9033f3e-f665-41a6-84ef-756f6778e6fe'
+                  width={200}
+                  height={200}
+                  x='50%'
+                  y='50%'
+                  patternUnits='userSpaceOnUse'
+                  patternTransform='translate(-100 0)'
+                >
+                  <path d='M.5 200V.5H200' fill='none' />
+                </pattern>
+              </defs>
+              <svg x='50%' y='50%' className='overflow-visible fill-gray-50'>
+                <path
+                  d='M-300 0h201v201h-201Z M300 200h201v201h-201Z'
+                  strokeWidth={0}
+                />
+              </svg>
+              <rect
+                width='100%'
+                height='100%'
+                strokeWidth={0}
+                fill='url(#e9033f3e-f665-41a6-84ef-756f6778e6fe)'
+              />
+            </svg>
+          </div>
+          <div className='mx-auto max-w-7xl px-6 lg:px-8'>
+            <h2 className='text-center text-lg font-semibold leading-8 text-gray-900'>
+              Trusted by the world’s most innovative teams
+            </h2>
+            <div className='flex justify-center mx-auto mt-10 max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5'>
+              <AliceCarousel
+                mouseTracking
+                responsive={{
+                  0: { items: 2 }, // Display 2 logos for smaller screens
+                  600: { items: 3 }, // Display 3 logos for medium screens
+                  1024: { items: 4 }, // Display 4 logos for large screens
+                  1200: { items: 5 }, // Display 5 logos for extra-large screens
+                }}
+                infinite
+                disableDotsControls
+                disableButtonsControls
+                autoPlay
+                autoPlayInterval={600}
+                items={logos}
+              />
+              {/* {logos.map((logo) => (
+                <img
+                  className='col-span-2 max-h-12 w-full object-contain lg:col-span-1'
+                  src={logo}
+                  alt='Transistor'
+                  width={158}
+                  height={48}
+                />
+              ))} */}
+              {/* 
+              <img
+                className='col-span-2 max-h-12 w-full object-contain lg:col-span-1'
+                src='https://tailwindui.com/img/logos/158x48/reform-logo-gray-900.svg'
+                alt='Reform'
+                width={158}
+                height={48}
+              />
+              <img
+                className='col-span-2 max-h-12 w-full object-contain lg:col-span-1'
+                src='https://tailwindui.com/img/logos/158x48/tuple-logo-gray-900.svg'
+                alt='Tuple'
+                width={158}
+                height={48}
+              />
+              <img
+                className='col-span-2 max-h-12 w-full object-contain sm:col-start-2 lg:col-span-1'
+                src='https://tailwindui.com/img/logos/158x48/savvycal-logo-gray-900.svg'
+                alt='SavvyCal'
+                width={158}
+                height={48}
+              />
+              <img
+                className='col-span-2 col-start-2 max-h-12 w-full object-contain sm:col-start-auto lg:col-span-1'
+                src='https://tailwindui.com/img/logos/158x48/statamic-logo-gray-900.svg'
+                alt='Statamic'
+                width={158}
+                height={48}
+              /> */}
+            </div>
+          </div>
         </div>
 
         {/* Team section */}
-        <div className='mx-auto mt-32 max-w-7xl px-6 sm:mt-40 lg:px-8'>
-          <div className='mx-auto max-w-2xl lg:mx-0'>
-            <h2 className='text-3xl font-bold tracking-tight text-white sm:text-4xl'>
-              Our team
+        <BackgroundWrapper colorFrom='white' colorTo='meliusRed'>
+          <div className='mx-auto mt-32 max-w-7xl px-6 sm:mt-48 lg:px-8'>
+            <div className='mx-auto max-w-2xl lg:mx-0'>
+              <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
+                Our team
+              </h2>
+              <p className='mt-6 text-lg leading-8 text-gray-600'>
+                Sit facilis neque ab nulla vel. Cum eos in laudantium.
+                Temporibus eos totam in dolorum. Nemo vel facere repellendus ut
+                eos dolores similique.
+              </p>
+            </div>
+            <ul
+              role='list'
+              className='mx-auto mt-20 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-16 text-center sm:grid-cols-3 md:grid-cols-4 lg:mx-0 lg:max-w-none lg:grid-cols-5 xl:grid-cols-6'
+            >
+              {team.map((person) => (
+                <li key={person.name}>
+                  <img
+                    className='mx-auto h-24 w-24 rounded-full'
+                    src={person.imageUrl}
+                    alt=''
+                  />
+                  <h3 className='mt-6 text-base font-semibold leading-7 tracking-tight text-gray-900'>
+                    {person.name}
+                  </h3>
+                  <p className='text-sm leading-6 text-gray-600'>
+                    {person.role}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </BackgroundWrapper>
+
+        {/* Blog section */}
+        <div className='mx-auto my-32 max-w-7xl px-6 sm:mt-40 lg:px-8'>
+          <div className='mx-auto max-w-2xl lg:mx-0 lg:max-w-none'>
+            <h2 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
+              From the blog
             </h2>
-            <p className='mt-6 text-lg leading-8 text-gray-300'>
-              Excepturi repudiandae alias ut. Totam aut facilis. Praesentium in
-              neque vel omnis. Eos error odio. Qui fugit voluptatibus eum culpa.
+            <p className='mt-2 text-lg leading-8 text-gray-600'>
+              Vel dolorem qui facilis soluta sint aspernatur totam cumque.
             </p>
           </div>
-          <ul
-            role='list'
-            className='mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 xl:grid-cols-4'
-          >
-            {team.map((person) => (
-              <li key={person.name}>
-                {person.imageUrl && (
-                  <img
-                    className='aspect-[14/13] w-full rounded-2xl object-cover object-top'
-                    src={urlFor(person.imageUrl)}
-                    alt={person.name}
-                  />
-                )}
-                <h3 className='mt-6 text-lg font-semibold leading-8 tracking-tight text-white'>
-                  {person.name}
-                </h3>
-                {person.bio && (
-                  <p className='text-base leading-7 text-gray-300'>
-                    {person.bio}
-                  </p>
-                )}
-                {/* Render other properties conditionally */}
-              </li>
-            ))}
-          </ul>
-        </div>
+          <div className='mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3'>
+            {blogPosts.map((post) => (
+              <article
+                key={post.id}
+                className='relative isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900 px-8 pb-8 pt-80 sm:pt-48 lg:pt-80'
+              >
+                <img
+                  src={post.imageUrl}
+                  alt=''
+                  className='absolute inset-0 -z-10 h-full w-full object-cover'
+                />
+                <div className='absolute inset-0 -z-10 bg-gradient-to-t from-gray-900 via-gray-900/40' />
+                <div className='absolute inset-0 -z-10 rounded-2xl ring-1 ring-inset ring-gray-900/10' />
 
-        {/* CTA section */}
-        <div className='relative isolate -z-10 mt-32 sm:mt-40'>
-          <div className='mx-auto max-w-7xl sm:px-6 lg:px-8'>
-            <div className='mx-auto flex max-w-2xl flex-col gap-16 bg-white/5 px-6 py-16 ring-1 ring-white/10 sm:rounded-3xl sm:p-8 lg:mx-0 lg:max-w-none lg:flex-row lg:items-center lg:py-20 xl:gap-x-20 xl:px-20'>
-              <img
-                className='h-96 w-full flex-none rounded-2xl object-cover shadow-xl lg:aspect-square lg:h-auto lg:max-w-sm'
-                src='https://images.unsplash.com/photo-1519338381761-c7523edc1f46?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80'
-                alt=''
-              />
-              <div className='w-full flex-auto'>
-                <h2 className='text-3xl font-bold tracking-tight text-white sm:text-4xl'>
-                  Join our team
-                </h2>
-                <p className='mt-6 text-lg leading-8 text-gray-300'>
-                  Lorem ipsum dolor sit amet consect adipisicing elit. Possimus
-                  magnam voluptatum cupiditate veritatis in accusamus quisquam.
-                </p>
-                <ul
-                  role='list'
-                  className='mt-10 grid grid-cols-1 gap-x-8 gap-y-3 text-base leading-7 text-white sm:grid-cols-2'
-                >
-                  {benefits.map((benefit) => (
-                    <li key={benefit} className='flex gap-x-3'>
-                      <CheckCircleIcon
-                        className='h-7 w-5 flex-none'
-                        aria-hidden='true'
+                <div className='flex flex-wrap items-center gap-y-1 overflow-hidden text-sm leading-6 text-gray-300'>
+                  <time dateTime={post.datetime} className='mr-8'>
+                    {post.date}
+                  </time>
+                  <div className='-ml-4 flex items-center gap-x-4'>
+                    <svg
+                      viewBox='0 0 2 2'
+                      className='-ml-0.5 h-0.5 w-0.5 flex-none fill-white/50'
+                    >
+                      <circle cx={1} cy={1} r={1} />
+                    </svg>
+                    <div className='flex gap-x-2.5'>
+                      <img
+                        src={post.author.imageUrl}
+                        alt=''
+                        className='h-6 w-6 flex-none rounded-full bg-white/10'
                       />
-                      {benefit}
-                    </li>
-                  ))}
-                </ul>
-                <div className='mt-10 flex'>
-                  <a
-                    href='#'
-                    className='text-sm font-semibold leading-6 text-indigo-400'
-                  >
-                    See our job postings <span aria-hidden='true'>&rarr;</span>
-                  </a>
+                      {post.author.name}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className='absolute inset-x-0 -top-16 -z-10 flex transform-gpu justify-center overflow-hidden blur-3xl'
-            aria-hidden='true'
-          >
-            <div
-              className='aspect-[1318/752] w-[82.375rem] flex-none bg-gradient-to-r from-meliusRed to-meliusRed opacity-75'
-              style={{
-                clipPath:
-                  'polygon(73.6% 51.7%, 91.7% 11.8%, 100% 46.4%, 97.4% 82.2%, 92.5% 84.9%, 75.7% 64%, 55.3% 47.5%, 46.5% 49.4%, 45% 62.9%, 50.3% 87.2%, 21.3% 64.1%, 0.1% 100%, 5.4% 51.1%, 21.4% 63.9%, 58.9% 0.2%, 73.6% 51.7%)',
-              }}
-            />
+                <h3 className='mt-3 text-lg font-semibold leading-6 text-white'>
+                  <a href={post.href}>
+                    <span className='absolute inset-0' />
+                    {post.title}
+                  </a>
+                </h3>
+              </article>
+            ))}
           </div>
         </div>
-      </div>
+      </main>
     </div>
   )
 }
+
+export default AboutPage

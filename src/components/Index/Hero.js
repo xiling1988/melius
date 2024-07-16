@@ -31,14 +31,14 @@ function Hero() {
             <span className='text-meliusRed'>Staffing Solutions</span>
           </h1>
           <div className='mt-6 max-w-xl lg:mt-0 xl:col-end-1 xl:row-start-1'>
-            <h2
+            <p
               data-aos='zoom-in-up'
               data-aos-delay='600'
               className='pb-3 max-w-2xl text-lg font-bold tracking-tight text-meliusBlue sm:text-lg lg:col-span-2 xl:col-auto'
             >
               Transform your Business with Melius: your Partner in Excellence
               for HR Consultancy in Dubai and Beyond
-            </h2>
+            </p>
             <p
               data-aos='zoom-in-up'
               data-aos-delay='800'
